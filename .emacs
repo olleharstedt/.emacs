@@ -35,7 +35,22 @@
 (require 'evil)
 (evil-mode 1)
 
+;; Some vim-like bindings
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+(define-key evil-normal-state-map (kbd ";") 'evil-ex)
+(define-key evil-normal-state-map (kbd "C-s") 'evil-write)
+(define-key evil-normal-state-map (kbd "C-q") 'kill-buffer-and-window)
+
+;; Function to run <leader>-e
+(defun evil-leader-e ()
+  "Open tab with file browser."
+  (interactive)
+  (elscreen-create)
+  (dired "~")
+  )
+(evil-leader/set-key "e" 'evil-leader-e)
+; 'evil-leader-e
 
 (require 'erc)
 
@@ -67,9 +82,6 @@
 
 (ac-config-default)
 
-; Test for evil leader
-(evil-leader/set-key "e" 'find-file)
-
 ; Ctags and autocomplete
 ;(custom-set-variables
 ; '(ac-etags-requires 1))
@@ -89,6 +101,12 @@
 	     (define-key php-mode-map  (kbd "C-]") 'ac-php-find-symbol-at-point)   ;goto define
 	     (define-key php-mode-map  (kbd "C-t") 'ac-php-location-stack-back   ) ;go back
 	                    ))
+
+;; Turn off menu
+(menu-bar-mode -1)
+
+;; Turn on Vim tabs
+(global-evil-tabs-mode 1)
 
 (provide 'emacs)
 ;;; .emacs ends here
